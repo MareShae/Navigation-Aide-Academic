@@ -1,0 +1,15 @@
+# Camera access
+picamera
+
+# Image processing
+pillow
+numpy
+
+# Neural network
+
+# Spatialo audio
+spaudiopy
+
+# Networking
+sockets
+bottle
