@@ -2,7 +2,7 @@ import cv2
 import numpy
 import torch
 import util.config as config
-from midas.model_loader import load_model, default_models
+from MiDaS.midas.model_loader import load_model, default_models
 
 
 ## Print and keep the input prompt

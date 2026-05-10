@@ -8,7 +8,7 @@ import socket
 import threading
 import traceback
 import util.comms as comms
-import ServerPC.MiDaS as MiDaS
+import ServerPC.midas as midas
 
 
 ## Print and keep the input prompt
@@ -82,7 +82,7 @@ try:
         image: numpy.ndarray = numpy.asarray(recv["image"], dtype=numpy.uint8)
 
         ## c. Send to multicore processes
-        show, roi = MiDaS.main(image)
+        show, roi = midas.main(image)
 
         ## d. Response to client w depth regions[xyz] and objects detected[class]
         comms.send(CLIENT, {"depth": roi})
