@@ -1,0 +1,95 @@
+#!/usr/bin/bash
+
+# Start script w elevated privileges
+if [ "$EUID" -ne 0 ]; then
+	echo "Please run using \`sudo\` as a prefix"
+	exit 2
+fi
+
+# https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+
+INSTALL="NO"
+REMOVE="NO"
+HELP="NO"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -i|--install) 
+        INSTALL="YES"
+        shift
+        ;;
+    -r|--remove)
+        REMOVE="YES"
+        shift
+        ;;
+    -h|--help|*)
+        HELP="YES"
+        shift
+        ;;
+    -*|--*)
+        echo "Unknown option $1"
+        exit 1
+        ;;
+    *)
+    HELP="YES"
+    shift
+    ;;
+  esac
+done
+
+
+# Execution: the space in [] is very important.!!
+if [ "$INSTALL" != "$REMOVE" ]; then
+    PATHTOSERVICE="/lib/systemd/system/NaviBMEECE499.service"
+    if [ "$INSTALL" == "YES" ]; then
+        echo "Writing new service to $PATHTOSERVICE:"
+        echo ""
+
+        # Write service entry to file [PATHTOSERVICE]
+        truncate -s0 $PATHTOSERVICE                  # Clear file contents
+        echo "[Unit]"                                | tee -a $PATHTOSERVICE
+        echo "Description=Navigation Aide"           | tee -a $PATHTOSERVICE
+        echo ""                                      | tee -a $PATHTOSERVICE
+        echo "[Service]"                             | tee -a $PATHTOSERVICE
+        echo "Type=idle"                             | tee -a $PATHTOSERVICE
+        echo "ExecStart=/home/navi/NaviAide/main.py" | tee -a $PATHTOSERVICE
+        echo ""                                      | tee -a $PATHTOSERVICE
+        echo "[Install]"                             | tee -a $PATHTOSERVICE
+        echo "WantedBy=multi-user.target"            | tee -a $PATHTOSERVICE
+
+        # Setting permissions for the service
+        echo ""
+        echo ""
+        echo "Setting permissions for $PATHTOSERVICE"
+        echo ""
+        sudo chmod 644 $PATHTOSERVICE
+
+        # List, enable and start the service
+        echo "Starting service"
+        echo ""
+        sudo systemctl daemon-reload
+        sudo systemctl enable NaviBMEECE499.service
+        sudo systemctl start NaviBMEECE499.service
+
+        # Show that the service is enabled
+        sudo systemctl status NaviBMEECE499.service
+
+    elif [ "$REMOVE" == "YES" ]; then
+        # Stop the service
+        echo "Stopping $PATHTOSERVICE"
+        sudo systemctl stop NaviBMEECE499.service
+
+        # Remove the service file
+        echo "Removing $PATHTOSERVICE"
+        sudo rm -rf $PATHTOSERVICE
+
+        # Reload the service list
+        echo "Reload systemctl daemon"
+        sudo systemctl daemon-reload
+    fi
+
+elif [ "$HELP" == "YES" ]; then
+    echo "Use -i[--install] to install and -r[--remove] to uninstall the service"
+fi
+

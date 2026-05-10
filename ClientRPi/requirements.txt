@@ -1,0 +1,9 @@
+# Camera Access
+opencv-python
+
+# Spatial Audio
+soundaudio
+
+# Networking
+sockets
+msgpack

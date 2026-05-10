@@ -1,2 +1,2 @@
-# NavigationAide
-ECE 499 Project
+# Navigation Aide - Academic
+

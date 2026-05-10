@@ -1,15 +1,13 @@
 # Camera access
-picamera
+opencv-python
 
 # Image processing
 pillow
 numpy
 
-# Neural network
-
-# Spatialo audio
-spaudiopy
+# ML
+torch
 
 # Networking
 sockets
-bottle
+msgpack
