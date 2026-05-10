@@ -58,4 +58,4 @@ rm -rf Navigation-Aide-Academic
 
 
 ## ℹ️
-This project utilizes [MiDaS](https://github.com/isl-org/MiDaS.git) depth estimation model, by Intel Labs for image processing, as a submodule; See .gitmodules. It was sponsored by the University of Victoria and Co-operative Education and Work-Integrated Learning (CEWIL). Its successful completion was a core requirement for ECE 499. Navigation Aide was developed by three students including me.
+This project utilizes [MiDaS](https://github.com/isl-org/MiDaS.git) depth estimation model, by Intel Labs for image processing, as a submodule; See .gitmodules. It was sponsored by the University of Victoria and Co-operative Education and Work-Integrated Learning (CEWIL). Its successful completion was a core requirement for ECE 499. Three students developed Navigation Aide, and I was responsible for all code in this repository.
